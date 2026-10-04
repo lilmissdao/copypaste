@@ -25,8 +25,9 @@ so it survives restarts. Only text is recorded.
 
 ## Getting the .exe
 
-**Option A – download a build:** open the repo's **Actions** tab, pick the latest
-`build` run and download the `CopyPaste` artifact.
+**Option A – download it:**
+[**CopyPaste.exe**](https://github.com/lilmissdao/copypaste/releases/latest/download/CopyPaste.exe)
+(direct download of the latest build, nothing to unzip).
 
 **Option B – build it yourself (no installs needed):** clone or download this repo
 on your Windows machine and double-click `build.bat`. It uses the C# compiler that

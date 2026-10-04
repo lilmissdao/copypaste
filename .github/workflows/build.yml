@@ -5,6 +5,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -17,3 +20,16 @@ jobs:
         with:
           name: CopyPaste
           path: CopyPaste.exe
+      # Publish the exe as a release so there's a permanent direct download link:
+      # https://github.com/<owner>/<repo>/releases/latest/download/CopyPaste.exe
+      - name: Publish release
+        if: github.event_name == 'push'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="v1.0.${{ github.run_number }}"
+          gh release create "$tag" CopyPaste.exe \
+            --target "${{ github.sha }}" \
+            --title "CopyPaste $tag" \
+            --notes "Download CopyPaste.exe below and double-click it. If Windows warns you, choose More info -> Run anyway."
