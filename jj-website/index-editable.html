@@ -1,0 +1,609 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jeune Jolie Copper Spray</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one sticky stage, five nested layers you scroll *into* (face → iris → scalp → peptide → copper ion → formula), then a calm cream product page. */
+:root{
+  --porcelain:#ECEAE6;      /* the photo's own backdrop */
+  --porcelain-2:#E2DFD9;
+  --ink:#1B1A22;
+  --ink-soft:#5B5866;
+  --cupric:#4B3BE0;         /* the violet-blue of the copper peptide in the bottle */
+  --cupric-glow:#8F84FF;
+  --copper:#C07A45;         /* metal copper, used sparingly */
+  --abyss:#0B0A1A;
+  --abyss-text:#ECEAF6;
+  --abyss-mute:#A6A2C4;
+  --f-display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --f-body:"Figtree", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:var(--porcelain);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cupric);outline-offset:3px;border-radius:4px}
+
+/* ---------- header ---------- */
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-top:calc(14px + env(safe-area-inset-top, 0px));padding-bottom:14px;
+  padding-left:max(24px, env(safe-area-inset-left, 0px));padding-right:max(24px, env(safe-area-inset-right, 0px));
+  color:var(--ink);transition:color .4s ease}
+.bar.on-dark{color:var(--abyss-text)}
+.wordmark{font-family:var(--f-display);font-size:1.35rem;letter-spacing:.02em;text-decoration:none;white-space:nowrap}
+.wordmark i{font-style:italic}
+.nav{display:flex;align-items:center;gap:22px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}
+.nav a{text-decoration:none;opacity:.8}
+.nav a:hover{opacity:1}
+.nav .buy{opacity:1;border:1px solid currentColor;padding:8px 14px;border-radius:999px}
+@media (max-width:640px){.nav .hide-sm{display:none}}
+
+/* ---------- the dive ---------- */
+#dive{position:relative;height:720vh}
+.stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;background:var(--abyss)}
+.layer{position:absolute;inset:0;will-change:transform,opacity,clip-path;transform-origin:50% 50%}
+.layer canvas{width:100%;height:100%;display:block}
+#L0{background:var(--porcelain);z-index:1}
+#L0 img{width:100%;height:100%;object-fit:cover;object-position:60% 50%;display:block;user-select:none;-webkit-user-drag:none}
+#L1{z-index:2}#L2{z-index:3}#L3{z-index:4}#L4{z-index:5}#L5{z-index:6}
+
+/* hero copy sits on the photo's empty porcelain side */
+.hero-copy{position:absolute;z-index:10;left:0;top:0;bottom:0;width:min(46vw,620px);display:flex;flex-direction:column;justify-content:center;gap:22px;
+  padding-left:max(48px, env(safe-area-inset-left, 0px));padding-right:24px;pointer-events:none}
+.hero-copy > *{pointer-events:auto}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.hero-copy h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.6rem,5.6vw,5.4rem);line-height:.98;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.hero-copy h1 em{font-style:italic;color:var(--cupric)}
+.hero-copy p{margin:0;max-width:34ch;color:var(--ink-soft);font-size:1.02rem}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--porcelain);text-decoration:none;padding:14px 22px;border-radius:999px;font-weight:500;font-size:.95rem;transition:background .25s ease,transform .25s ease}
+.btn:hover{background:var(--cupric);transform:translateY(-1px)}
+.btn .price{font-family:var(--f-mono);font-size:.85rem;opacity:.8}
+.scroll-cue{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);display:flex;align-items:center;gap:10px}
+.scroll-cue::before{content:"";width:28px;height:1px;background:currentColor;animation:cue 2.4s ease-in-out infinite;transform-origin:left}
+@keyframes cue{0%,100%{transform:scaleX(.3)}50%{transform:scaleX(1)}}
+
+@media (max-width:760px){
+  .hero-copy{width:auto;right:0;top:auto;justify-content:flex-end;gap:14px;
+    padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-bottom:calc(28px + env(safe-area-inset-bottom, 0px));padding-top:120px;
+    background:linear-gradient(to top, var(--porcelain) 52%, rgba(236,234,230,.85) 72%, rgba(236,234,230,0))}
+  .hero-copy h1{font-size:clamp(2.3rem,11vw,3.2rem)}
+  #L0 img{object-position:60% 30%}
+}
+
+/* captions for the deep layers */
+.cap{position:absolute;z-index:20;left:0;bottom:0;width:min(560px,100%);
+  padding-left:max(48px, env(safe-area-inset-left, 0px));padding-right:24px;padding-bottom:calc(56px + env(safe-area-inset-bottom, 0px));
+  color:var(--abyss-text);opacity:0;pointer-events:none;transition:none}
+.cap .eyebrow{color:var(--abyss-mute)}
+.cap h2{font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,4.2vw,3.6rem);line-height:1.02;margin:12px 0 14px;text-wrap:balance}
+.cap h2 em{font-style:italic;color:var(--cupric-glow)}
+.cap p{margin:0;max-width:44ch;color:var(--abyss-mute);font-size:1rem}
+.cap p strong{color:var(--abyss-text);font-weight:500}
+.fov{display:flex;align-items:center;gap:10px;margin-top:18px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;color:var(--abyss-mute)}
+.fov span.rule{display:block;width:64px;height:7px;border:1px solid currentColor;border-top:none}
+@media (max-width:760px){
+  .cap{padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-bottom:calc(34px + env(safe-area-inset-bottom, 0px));
+    background:linear-gradient(to top, rgba(11,10,26,.92) 40%, rgba(11,10,26,0))}
+  .cap p{font-size:.95rem}
+}
+
+/* depth gauge */
+.gauge{position:absolute;z-index:30;right:max(32px, env(safe-area-inset-right, 0px));top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:14px;list-style:none;margin:0;padding:0;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+.gauge li{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;justify-items:end;color:var(--g-col,var(--ink-soft));opacity:.45;transition:opacity .3s ease}
+.gauge li .tick{width:14px;height:1px;background:currentColor;transition:width .3s ease;order:2}
+.gauge li .lbl{order:1;text-align:right;white-space:nowrap}
+.gauge li .lbl small{display:block;font-size:.62rem;letter-spacing:.06em;opacity:.8;text-transform:none}
+.gauge li.active{opacity:1}
+.gauge li.active .tick{width:34px}
+.stage.dark .gauge{--g-col:var(--abyss-text)}
+@media (max-width:760px){
+  .gauge{top:calc(76px + env(safe-area-inset-top, 0px));transform:none;right:var(--gutter-r);gap:8px}
+  .gauge li .lbl{display:none}
+  .gauge li .tick{width:10px}
+  .gauge li.active .tick{width:22px}
+}
+
+/* layer 5: surfacing to the formula */
+#L5{background:radial-gradient(120% 90% at 50% 40%, #F4F2EE 0%, var(--porcelain) 45%, var(--porcelain-2) 100%);display:grid;place-items:center;
+  padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+.formula{display:grid;justify-items:center;text-align:center;gap:6px;max-width:640px}
+.formula .eyebrow{color:var(--ink-soft)}
+.formula .pct{font-family:var(--f-display);font-weight:400;font-size:clamp(6rem,22vw,15rem);line-height:.85;letter-spacing:-.04em;color:var(--ink);font-variant-numeric:lining-nums}
+.formula .pct sup{font-size:.32em;letter-spacing:0;vertical-align:.95em;color:var(--cupric)}
+.formula h3{font-family:var(--f-display);font-weight:400;font-style:italic;font-size:clamp(1.4rem,3vw,2rem);margin:6px 0 2px}
+.formula .spec{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.06em;color:var(--ink-soft);margin:6px 0 18px}
+.formula .spec span+span::before{content:"·";margin-right:18px;opacity:.6}
+.formula .fine{font-size:.85rem;color:var(--ink-soft);margin-top:14px}
+.stars{color:var(--copper);letter-spacing:.1em}
+
+/* ---------- after the dive ---------- */
+.page{padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+.wrap{max-width:1120px;margin:0 auto}
+section.block{padding-block:120px}
+.block-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:48px;align-items:end;margin-bottom:56px}
+.block-head h2{font-family:var(--f-display);font-weight:400;font-size:clamp(2.2rem,4.6vw,3.8rem);line-height:1;margin:10px 0 0;text-wrap:balance}
+.block-head h2 em{font-style:italic;color:var(--cupric)}
+.block-head p{margin:0;color:var(--ink-soft);max-width:52ch}
+@media (max-width:760px){.block-head{grid-template-columns:1fr;gap:18px}section.block{padding-block:80px}}
+
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:var(--porcelain-2);border-top:1px solid var(--ink)}
+.step{background:var(--porcelain);padding:28px 28px 34px 0;display:grid;gap:12px;align-content:start}
+.step + .step{padding-left:28px}
+.step .n{font-family:var(--f-display);font-style:italic;font-size:2.4rem;line-height:1;color:var(--cupric)}
+.step h3{margin:0;font-size:1.1rem;font-weight:600}
+.step p{margin:0;color:var(--ink-soft);font-size:.96rem}
+@media (max-width:760px){.steps{grid-template-columns:1fr}.step,.step+.step{padding:24px 0}}
+
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid rgba(27,26,34,.18);border-bottom:1px solid rgba(27,26,34,.18);margin-top:72px}
+.fact{padding:26px 20px 26px 0;display:grid;gap:6px}
+.fact + .fact{padding-left:20px;border-left:1px solid rgba(27,26,34,.12)}
+.fact b{font-family:var(--f-display);font-weight:400;font-size:2rem;line-height:1;font-variant-numeric:lining-nums}
+.fact span{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+@media (max-width:760px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.fact:nth-child(3){padding-left:0;border-left:none}.fact:nth-child(n+3){border-top:1px solid rgba(27,26,34,.12)}}
+
+.family{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.prod{display:grid;gap:10px;padding:32px;border:1px solid rgba(27,26,34,.16);border-radius:2px;text-decoration:none;transition:border-color .25s ease,background .25s ease}
+.prod:hover{border-color:var(--ink);background:#F2F0EC}
+.prod .tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.prod h3{font-family:var(--f-display);font-weight:400;font-size:1.8rem;line-height:1.05;margin:0}
+.prod p{margin:0;color:var(--ink-soft);font-size:.95rem}
+.prod .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:10px;font-family:var(--f-mono);font-size:.85rem}
+.soldout{color:var(--copper)}
+@media (max-width:760px){.family{grid-template-columns:1fr}.prod{padding:24px}}
+
+.study{background:var(--abyss);color:var(--abyss-text)}
+.study .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:center}
+.study h2{font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,4vw,3.2rem);line-height:1.04;margin:10px 0 0;text-wrap:balance}
+.study h2 em{font-style:italic;color:var(--cupric-glow)}
+.study p{color:var(--abyss-mute);margin:0 0 22px;max-width:46ch}
+.study .eyebrow{color:var(--abyss-mute)}
+.btn.light{background:var(--abyss-text);color:var(--abyss)}
+.btn.light:hover{background:var(--cupric-glow);color:var(--abyss)}
+@media (max-width:760px){.study .wrap{grid-template-columns:1fr;gap:20px}}
+
+footer{padding-block:56px calc(56px + env(safe-area-inset-bottom, 0px));font-size:.88rem;color:var(--ink-soft)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 40px;align-items:baseline}
+footer .wordmark{color:var(--ink)}
+footer nav{display:flex;flex-wrap:wrap;gap:20px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--ink)}
+.code{font-family:var(--f-mono);color:var(--ink);border:1px dashed rgba(27,26,34,.4);padding:2px 8px;border-radius:3px;cursor:pointer;background:none;font-size:.85rem}
+
+/* reduced motion: layers crossfade without zooming */
+@media (prefers-reduced-motion: reduce){.scroll-cue::before{animation:none}}
+</style>
+
+<header class="bar" id="bar">
+  <a class="wordmark" href="https://www.jeunejoliecosmetics.com/" target="_blank" rel="noopener">Jeune <i>Jolie</i></a>
+  <nav class="nav" aria-label="Main">
+    <a class="hide-sm" href="#ritual">How to use</a>
+    <a class="hide-sm" href="https://www.jeunejoliecosmetics.com/pages/read-the-study" target="_blank" rel="noopener">The study</a>
+    <a class="buy" href="https://www.jeunejoliecosmetics.com/cart/50533377966157:1" target="_blank" rel="noopener">Buy · $45</a>
+  </nav>
+</header>
+
+<main>
+<section id="dive" aria-label="Five layers into the copper peptide">
+  <div class="stage" id="stage">
+    <div class="layer" id="L0"><img id="face" alt="Close-up of a woman's face, a vial of violet copper peptide catching the light over one eye" src="assets/hero.webp"></div>
+    <div class="layer" id="L1" aria-hidden="true"><canvas id="c1"></canvas></div>
+    <div class="layer" id="L2" aria-hidden="true"><canvas id="c2"></canvas></div>
+    <div class="layer" id="L3" aria-hidden="true"><canvas id="c3"></canvas></div>
+    <div class="layer" id="L4" aria-hidden="true"><canvas id="c4"></canvas></div>
+    <div class="layer" id="L5">
+      <div class="formula">
+        <div class="eyebrow">Layer 05 · Back to the surface</div>
+        <div class="pct">2.5<sup>%</sup></div>
+        <h3>Copper Peptide Hair &amp; Scalp Spray</h3>
+        <div class="spec"><span>GHK-Cu</span><span>4 oz / 120 ml</span><span class="stars" aria-label="Rated 4.7 out of 5">★ 4.7 · 171 reviews</span></div>
+        <a class="btn" href="https://www.jeunejoliecosmetics.com/cart/50533377966157:1" target="_blank" rel="noopener">Add to bag <span class="price">$45</span></a>
+        <div class="fine">Free U.S. shipping · 10% off your first order with JJ10</div>
+      </div>
+    </div>
+
+    <div class="hero-copy" id="heroCopy">
+      <div class="eyebrow">Jeune Jolie · Hair &amp; Scalp</div>
+      <h1>Copper, <em>at the root.</em></h1>
+      <p>Our 2.5% copper peptide spray, misted straight onto the scalp. Scroll to go five layers down.</p>
+      <div class="hero-actions">
+        <a class="btn" href="https://www.jeunejoliecosmetics.com/cart/50533377966157:1" target="_blank" rel="noopener">Shop the spray <span class="price">$45</span></a>
+        <span class="scroll-cue">Scroll</span>
+      </div>
+    </div>
+
+    <div class="cap" id="cap1">
+      <div class="eyebrow">Layer 01 / 05 · The colour</div>
+      <h2>That violet is <em>the copper.</em></h2>
+      <p>GHK-Cu holds a single copper ion, and that bond is what turns the solution blue-violet. If it isn't tinted, there isn't much copper in it.</p>
+      <div class="fov"><span class="rule"></span>field ≈ 12 mm</div>
+    </div>
+    <div class="cap" id="cap2">
+      <div class="eyebrow">Layer 02 / 05 · The scalp</div>
+      <h2>Every strand starts <em>below the surface.</em></h2>
+      <p>A follicle opening is about 70 µm across, finer than a grain of salt. That's why this is a <strong>scalp</strong> spray: it goes on the skin where hair begins, not on the lengths.</p>
+      <div class="fov"><span class="rule"></span>field ≈ 400 µm</div>
+    </div>
+    <div class="cap" id="cap3">
+      <div class="eyebrow">Layer 03 / 05 · The peptide</div>
+      <h2>Three amino acids, <em>one copper ion.</em></h2>
+      <p>GHK is glycine, histidine and lysine. Your body already makes it: it was first identified in human plasma in 1973, and the amount you carry falls as you get older.</p>
+      <div class="fov"><span class="rule"></span>field ≈ 2 nm</div>
+    </div>
+    <div class="cap" id="cap4">
+      <div class="eyebrow">Layer 04 / 05 · The ion</div>
+      <h2>Cu²⁺, <em>73 picometres wide.</em></h2>
+      <p>The smallest thing on this page and the reason for the rest of it. The peptide carries the copper; the copper is what does the work.</p>
+      <div class="fov"><span class="rule"></span>field ≈ 0.3 nm</div>
+    </div>
+
+    <ol class="gauge" id="gauge" aria-label="Depth">
+      <li><span class="lbl">Face<small>25 cm</small></span><span class="tick"></span></li>
+      <li><span class="lbl">Colour<small>12 mm</small></span><span class="tick"></span></li>
+      <li><span class="lbl">Scalp<small>400 µm</small></span><span class="tick"></span></li>
+      <li><span class="lbl">Peptide<small>2 nm</small></span><span class="tick"></span></li>
+      <li><span class="lbl">Ion<small>0.3 nm</small></span><span class="tick"></span></li>
+      <li><span class="lbl">Formula<small>2.5%</small></span><span class="tick"></span></li>
+    </ol>
+  </div>
+</section>
+
+<div class="page">
+  <section class="block" id="ritual">
+    <div class="wrap">
+      <div class="block-head">
+        <div>
+          <div class="eyebrow">The ritual</div>
+          <h2>Thirty seconds, <em>once a day.</em></h2>
+        </div>
+        <p>A fine mist that sinks in fast and doesn't weigh hair down. Use it on clean, dry or towel-dried hair, morning or night.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>Part</h3><p>Section your hair so the scalp is showing. Start at the crown and the part line, where thinning tends to show first.</p></div>
+        <div class="step"><div class="n">2</div><h3>Mist</h3><p>Hold the bottle close and spray directly onto the scalp, a few pumps per section, working across the head.</p></div>
+        <div class="step"><div class="n">3</div><h3>Massage</h3><p>Work it in with your fingertips for about a minute. Leave it in; no need to rinse. Style as usual.</p></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>2.5%</b><span>Copper peptide</span></div>
+        <div class="fact"><b>GHK-Cu</b><span>Active form</span></div>
+        <div class="fact"><b>120 ml</b><span>4 oz bottle</span></div>
+        <div class="fact"><b>4.7★</b><span>171 reviews</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="block-head">
+        <div>
+          <div class="eyebrow">Also from the lab</div>
+          <h2>The same copper, <em>for skin.</em></h2>
+        </div>
+        <p>Two more ways to use GHK-Cu, built for the face.</p>
+      </div>
+      <div class="family">
+        <a class="prod" href="https://www.jeunejoliecosmetics.com/products/skin-serum" target="_blank" rel="noopener">
+          <span class="tag">Face</span>
+          <h3>2% Copper Peptide Serum</h3>
+          <p>A lightweight daily serum with GHK-Cu for firmer, smoother-looking skin.</p>
+          <div class="row"><span>$29.99</span><span>View →</span></div>
+        </a>
+        <a class="prod" href="https://www.jeunejoliecosmetics.com/products/goat-milk-cream" target="_blank" rel="noopener">
+          <span class="tag">Face &amp; body</span>
+          <h3>GHK-Cu Goat Milk Cream</h3>
+          <p>Copper peptide for collagen and elastin support, goat milk's natural lactic acid to smooth, and honey to soothe dry skin.</p>
+          <div class="row"><span>$29.99</span><span class="soldout">Sold out</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="study page">
+  <div class="wrap" style="padding-block:96px">
+    <div>
+      <div class="eyebrow">The Jeune Jolie Journal</div>
+      <h2>What the research <em>actually says</em> about copper peptide.</h2>
+    </div>
+    <div>
+      <p>Most brands stop at the buzzword. We wrote up the science behind GHK-Cu, including what it can and can't do, in an 8-minute read.</p>
+      <a class="btn light" href="https://www.jeunejoliecosmetics.com/pages/read-the-study" target="_blank" rel="noopener">Read the study</a>
+    </div>
+  </div>
+</section>
+
+<footer class="page">
+  <div class="wrap">
+    <a class="wordmark" href="https://www.jeunejoliecosmetics.com/" target="_blank" rel="noopener">Jeune <i>Jolie</i></a>
+    <span>Free U.S. shipping · First order: <button class="code" id="code" type="button" title="Copy code">JJ10</button></span>
+    <nav aria-label="Social">
+      <a href="https://www.instagram.com/jeunejoliecosmetics" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://tiktok.com/@jeunejoliecosmetics" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://www.facebook.com/profile.php?id=61594097325692" target="_blank" rel="noopener">Facebook</a>
+    </nav>
+  </div>
+</footer>
+</main>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const IMG_W=2560, IMG_H=1100, EYE_X=1474, EYE_Y=421, IRIS_R=46;
+  const dive=document.getElementById('dive'), stage=document.getElementById('stage'), bar=document.getElementById('bar');
+  const L=[0,1,2,3,4,5].map(i=>document.getElementById('L'+i));
+  const caps=[null,1,2,3,4].map(i=>i&&document.getElementById('cap'+i));
+  const heroCopy=document.getElementById('heroCopy');
+  const gauge=[...document.querySelectorAll('#gauge li')];
+  const C=[null,1,2,3,4].map(i=>i&&document.getElementById('c'+i));
+  let W=0,H=0,M=0,DPR=1, eye={x:0,y:0,r:0}, entryR=[], exitR=[], HALF=0;
+
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const ss=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t)};
+  // seeded random so redraws match
+  function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+  function sizeCanvas(c){c.width=Math.round(W*DPR);c.height=Math.round(H*DPR);const x=c.getContext('2d');x.setTransform(DPR,0,0,DPR,0,0);return x}
+
+  /* ---- Layer 1: the iris, drawn to match hers (steel blue rim, amber collarette) ---- */
+  function drawIris(){
+    const x=sizeCanvas(C[1]), r=rng(7), cx=W/2, cy=H/2, R=entryR[1], P=exitR[1];
+    const bg=x.createRadialGradient(cx,cy,R*.9,cx,cy,Math.hypot(W,H)/2);
+    bg.addColorStop(0,'#2a2340');bg.addColorStop(.4,'#16122a');bg.addColorStop(1,'#0B0A1A');
+    x.fillStyle=bg;x.fillRect(0,0,W,H);
+    // sclera hint + violet light from the vial
+    const vio=x.createRadialGradient(cx-R*1.6,cy-R*1.4,0,cx-R*1.6,cy-R*1.4,R*3);
+    vio.addColorStop(0,'rgba(143,132,255,.35)');vio.addColorStop(1,'rgba(143,132,255,0)');
+    x.fillStyle=vio;x.fillRect(0,0,W,H);
+    // base
+    const base=x.createRadialGradient(cx,cy,P,cx,cy,R);
+    base.addColorStop(0,'#c98a2e');base.addColorStop(.32,'#b88a45');base.addColorStop(.45,'#6f86a6');base.addColorStop(.85,'#5d7697');base.addColorStop(1,'#26324a');
+    x.beginPath();x.arc(cx,cy,R,0,Math.PI*2);x.fillStyle=base;x.fill();
+    // fibres
+    x.save();x.beginPath();x.arc(cx,cy,R,0,Math.PI*2);x.clip();
+    const N=1400;
+    for(let i=0;i<N;i++){
+      const a=r()*Math.PI*2, r0=P*(1+r()*.15), r1=R*(.55+r()*.47), wob=(r()-.5)*.08;
+      const inner=r()<.55;
+      x.strokeStyle= inner ? `rgba(${220+r()*30|0},${150+r()*50|0},${60+r()*40|0},${.25+r()*.4})` : `rgba(${170+r()*60|0},${195+r()*45|0},${225+r()*30|0},${.12+r()*.3})`;
+      x.lineWidth=.4+r()*1.2;
+      x.beginPath();
+      const ri= inner? r0 : P+(R-P)*.35*r();
+      const ro= inner? P+(R-P)*(.3+r()*.25) : r1;
+      x.moveTo(cx+Math.cos(a)*ri,cy+Math.sin(a)*ri);
+      x.quadraticCurveTo(cx+Math.cos(a+wob)*(ri+ro)/2,cy+Math.sin(a+wob)*(ri+ro)/2,cx+Math.cos(a+wob*1.6)*ro,cy+Math.sin(a+wob*1.6)*ro);
+      x.stroke();
+    }
+    // crypts
+    for(let i=0;i<70;i++){const a=r()*Math.PI*2,d=P+(R-P)*(.35+r()*.5),s=2+r()*R*.03;
+      x.fillStyle=`rgba(20,26,44,${.25+r()*.3})`;x.beginPath();x.ellipse(cx+Math.cos(a)*d,cy+Math.sin(a)*d,s*1.8,s,a,0,Math.PI*2);x.fill();}
+    x.restore();
+    // limbal ring
+    x.lineWidth=R*.07;x.strokeStyle='rgba(18,22,40,.75)';x.beginPath();x.arc(cx,cy,R-R*.035,0,Math.PI*2);x.stroke();
+    // pupil
+    const pu=x.createRadialGradient(cx,cy,0,cx,cy,P*1.08);
+    pu.addColorStop(0,'#05040c');pu.addColorStop(.9,'#07060f');pu.addColorStop(1,'rgba(7,6,15,0)');
+    x.fillStyle=pu;x.beginPath();x.arc(cx,cy,P*1.08,0,Math.PI*2);x.fill();
+    // catchlight
+    x.fillStyle='rgba(255,255,255,.75)';x.beginPath();x.ellipse(cx-R*.32,cy-R*.36,R*.07,R*.05,-.5,0,Math.PI*2);x.fill();
+  }
+
+  /* ---- Layer 2: scalp macro, follicles with violet mist ---- */
+  function drawScalp(){
+    const x=sizeCanvas(C[2]), r=rng(21), cx=W/2, cy=H/2, F=exitR[2];
+    const bg=x.createRadialGradient(cx,cy,0,cx,cy,Math.hypot(W,H)/1.6);
+    bg.addColorStop(0,'#6d4a42');bg.addColorStop(.5,'#3d2729');bg.addColorStop(1,'#140c12');
+    x.fillStyle=bg;x.fillRect(0,0,W,H);
+    // skin texture
+    for(let i=0;i<2600;i++){x.fillStyle=`rgba(${r()<.5?255:30},${r()<.5?220:15},${200},${r()*.035})`;
+      x.beginPath();x.arc(r()*W,r()*H,1+r()*4,0,Math.PI*2);x.fill();}
+    // micro-creases
+    x.strokeStyle='rgba(20,10,14,.18)';x.lineWidth=1;
+    for(let i=0;i<60;i++){let px=r()*W,py=r()*H;x.beginPath();x.moveTo(px,py);for(let k=0;k<5;k++){px+=(r()-.5)*M*.18;py+=(r()-.5)*M*.18;x.lineTo(px,py)}x.stroke();}
+    // follicles with hairs (avoid the centre)
+    const n=Math.round(W*H/9000);
+    for(let i=0;i<n;i++){
+      const px=r()*W, py=r()*H; if(Math.hypot(px-cx,py-cy)<F*3)continue;
+      const s=M*(.006+r()*.006), ang=-1.1+(r()-.5)*.6, len=M*(.12+r()*.35);
+      x.fillStyle='rgba(18,9,12,.75)';x.beginPath();x.ellipse(px,py,s*1.3,s,ang,0,Math.PI*2);x.fill();
+      x.strokeStyle=`rgba(${25+r()*30|0},${15+r()*15|0},${14},.9)`;x.lineWidth=s*.8;x.lineCap='round';
+      x.beginPath();x.moveTo(px,py);x.quadraticCurveTo(px+Math.cos(ang)*len*.5+(r()-.5)*len*.2,py+Math.sin(ang)*len*.5,px+Math.cos(ang)*len,py+Math.sin(ang)*len);x.stroke();
+    }
+    // spray droplets
+    for(let i=0;i<180;i++){
+      const px=r()*W,py=r()*H,s=M*(.004+r()*r()*.03);
+      const g=x.createRadialGradient(px-s*.3,py-s*.3,0,px,py,s);
+      g.addColorStop(0,'rgba(220,214,255,.8)');g.addColorStop(.35,'rgba(143,132,255,.45)');g.addColorStop(1,'rgba(75,59,224,.08)');
+      x.fillStyle=g;x.beginPath();x.arc(px,py,s,0,Math.PI*2);x.fill();
+    }
+    // the central follicle we fall into
+    const halo=x.createRadialGradient(cx,cy,F*.6,cx,cy,F*4);
+    halo.addColorStop(0,'rgba(143,132,255,.55)');halo.addColorStop(1,'rgba(143,132,255,0)');
+    x.fillStyle=halo;x.beginPath();x.arc(cx,cy,F*4,0,Math.PI*2);x.fill();
+    x.fillStyle='#0b0812';x.beginPath();x.arc(cx,cy,F,0,Math.PI*2);x.fill();
+    x.strokeStyle='rgba(236,234,246,.35)';x.lineWidth=1;x.beginPath();x.arc(cx,cy,F*1.25,0,Math.PI*2);x.stroke();
+  }
+
+  /* ---- Layer 3: GHK-Cu schematic ---- */
+  function drawPeptide(){
+    const x=sizeCanvas(C[3]), cx=W/2, cy=H/2, Cu=exitR[3];
+    x.fillStyle='#0d0b26';x.fillRect(0,0,W,H);
+    // faint lattice
+    x.strokeStyle='rgba(166,162,196,.07)';x.lineWidth=1;
+    const g=M*.06;for(let yy=-g;yy<H+g;yy+=g*.866){for(let xx=-g;xx<W+g;xx+=g){const o=(Math.round(yy/(g*.866))%2)*g/2;x.beginPath();x.arc(xx+o,yy,1.2,0,Math.PI*2);x.stroke();}}
+    const glow=x.createRadialGradient(cx,cy,0,cx,cy,M*.55);glow.addColorStop(0,'rgba(75,59,224,.45)');glow.addColorStop(1,'rgba(75,59,224,0)');
+    x.fillStyle=glow;x.fillRect(0,0,W,H);
+    const S=M*.3;
+    const res=[
+      {name:'Gly',full:'glycine',a:-2.5,d:1.05,col:'#A6A2C4'},
+      {name:'His',full:'histidine',a:-.35,d:1.0,col:'#8F84FF'},
+      {name:'Lys',full:'lysine',a:1.75,d:1.1,col:'#C07A45'}];
+    const pts=res.map(o=>({...o,x:cx+Math.cos(o.a)*S*o.d,y:cy+Math.sin(o.a)*S*o.d}));
+    // backbone
+    x.strokeStyle='rgba(236,234,246,.55)';x.lineWidth=2;x.beginPath();
+    x.moveTo(pts[0].x,pts[0].y);x.bezierCurveTo(pts[0].x+S*.6,pts[0].y-S*.5,pts[1].x-S*.1,pts[1].y-S*.6,pts[1].x,pts[1].y);
+    x.bezierCurveTo(pts[1].x+S*.3,pts[1].y+S*.6,pts[2].x+S*.7,pts[2].y-S*.2,pts[2].x,pts[2].y);x.stroke();
+    // coordination bonds to Cu (N atoms)
+    x.setLineDash([5,6]);x.strokeStyle='rgba(143,132,255,.85)';x.lineWidth=1.5;
+    const bonds=[[pts[0],.55],[pts[1],.5],[pts[1],.7],[pts[2],.6]];
+    bonds.forEach(([p,f],i)=>{const mx=cx+(p.x-cx)*f+(i===2?S*.12:0),my=cy+(p.y-cy)*f+(i===2?S*.1:0);
+      x.beginPath();x.moveTo(cx,cy);x.lineTo(mx,my);x.stroke();
+      x.setLineDash([]);x.fillStyle='#8F84FF';x.beginPath();x.arc(mx,my,M*.011,0,Math.PI*2);x.fill();
+      x.fillStyle='rgba(236,234,246,.8)';x.font=`500 ${Math.max(10,M*.016)}px "IBM Plex Mono",monospace`;x.fillText('N',mx+M*.016,my-M*.012);x.setLineDash([5,6]);});
+    x.setLineDash([]);
+    // residues
+    pts.forEach(p=>{
+      const rr=M*.055;const gg=x.createRadialGradient(p.x-rr*.3,p.y-rr*.3,0,p.x,p.y,rr);
+      gg.addColorStop(0,'rgba(255,255,255,.9)');gg.addColorStop(.25,p.col);gg.addColorStop(1,'rgba(13,11,38,.9)');
+      x.fillStyle=gg;x.beginPath();x.arc(p.x,p.y,rr,0,Math.PI*2);x.fill();
+      x.fillStyle='#ECEAF6';x.textAlign='center';
+      x.font=`500 ${Math.max(14,M*.03)}px "Bodoni Moda",Georgia,serif`;x.fillText(p.name,p.x,p.y+rr+M*.045);
+      x.fillStyle='rgba(166,162,196,.9)';x.font=`400 ${Math.max(10,M*.015)}px "IBM Plex Mono",monospace`;x.fillText(p.full.toUpperCase(),p.x,p.y+rr+M*.07);
+    });
+    // copper
+    const cg=x.createRadialGradient(cx-Cu*.3,cy-Cu*.3,0,cx,cy,Cu*1.15);
+    cg.addColorStop(0,'#FFFFFF');cg.addColorStop(.3,'#B9B2FF');cg.addColorStop(.75,'#4B3BE0');cg.addColorStop(1,'rgba(75,59,224,0)');
+    x.fillStyle=cg;x.beginPath();x.arc(cx,cy,Cu*1.15,0,Math.PI*2);x.fill();
+    x.fillStyle='#ECEAF6';x.textAlign='left';x.font=`500 ${Math.max(11,M*.018)}px "IBM Plex Mono",monospace`;
+    x.fillText('Cu²⁺',cx+Cu*1.4,cy-Cu*1.2);
+  }
+
+  /* ---- Layer 4: the ion, animated ---- */
+  const parts=[];let c4ctx=null;
+  function initIon(){
+    c4ctx=sizeCanvas(C[4]);parts.length=0;const r=rng(99);
+    for(let i=0;i<520;i++)parts.push({a:r()*Math.PI*2,rad:(.08+Math.pow(r(),.6)*.9),sp:(.05+r()*.25)*(r()<.5?-1:1),tilt:r()*Math.PI,sz:.6+r()*1.8,hue:r()});
+  }
+  function drawIon(time){
+    const x=c4ctx;if(!x)return;const cx=W/2,cy=H/2,core=exitR[4],R=M*.45;
+    x.fillStyle='#07061a';x.fillRect(0,0,W,H);
+    const aura=x.createRadialGradient(cx,cy,0,cx,cy,R*1.5);
+    aura.addColorStop(0,'rgba(143,132,255,.55)');aura.addColorStop(.35,'rgba(75,59,224,.25)');aura.addColorStop(1,'rgba(7,6,26,0)');
+    x.fillStyle=aura;x.fillRect(0,0,W,H);
+    const t=reduce?0:time/1000;
+    for(const p of parts){
+      const a=p.a+t*p.sp, rx=R*p.rad, ry=rx*.42;
+      const px=cx+Math.cos(a)*rx*Math.cos(p.tilt)-Math.sin(a)*ry*Math.sin(p.tilt);
+      const py=cy+Math.cos(a)*rx*Math.sin(p.tilt)+Math.sin(a)*ry*Math.cos(p.tilt);
+      x.fillStyle=p.hue<.82?`rgba(185,178,255,${.25+.5*(1-p.rad)})`:`rgba(224,160,110,.7)`;
+      x.beginPath();x.arc(px,py,p.sz,0,Math.PI*2);x.fill();
+    }
+    const cg=x.createRadialGradient(cx,cy,0,cx,cy,core*1.6);
+    cg.addColorStop(0,'#FFFFFF');cg.addColorStop(.35,'#DCD7FF');cg.addColorStop(.7,'rgba(143,132,255,.6)');cg.addColorStop(1,'rgba(143,132,255,0)');
+    x.fillStyle=cg;x.beginPath();x.arc(cx,cy,core*1.6,0,Math.PI*2);x.fill();
+  }
+
+  function layout(){
+    W=stage.clientWidth;H=stage.clientHeight;M=Math.min(W,H);DPR=Math.min(window.devicePixelRatio||1,2);HALF=Math.hypot(W,H)/2;
+    // where her eye lands under object-fit:cover
+    const s=Math.max(W/IMG_W,H/IMG_H), mobile=W<=760;
+    const posX=.60, posY=mobile?.30:.50;
+    const offX=(W-IMG_W*s)*posX, offY=(H-IMG_H*s)*posY;
+    eye={x:offX+EYE_X*s,y:offY+EYE_Y*s,r:IRIS_R*s};
+    entryR=[0, M*.36, M*.5, M*.5, M*.42, M*.5];
+    exitR =[eye.r, entryR[1]*.27, M*.045, M*.05, M*.035, 0];
+    drawIris();drawScalp();drawPeptide();initIon();drawIon(performance.now());
+    update();
+  }
+
+  let P=0, raf=0, ionVisible=false;
+  function progress(){
+    const span=dive.offsetHeight-H; const y=window.scrollY-dive.offsetTop;
+    return clamp(y/span,0,1);
+  }
+
+  function update(){
+    const pr=progress();
+    // 0..5 with a short hold at the top and bottom
+    P=clamp((pr-.03)/.9,0,1)*5;
+    const scales=[],offs=[];
+    for(let k=0;k<=5;k++){
+      const t=P-k, el=L[k];
+      let s=1, op=1, clip=null, tx=0, ty=0;
+      if(reduce){
+        op = k===0 ? 1-ss(.55,.95,t) : ss(-.5,-.05,t)*(k===5?1:1-ss(.55,.95,t));
+        el.style.transform='none';el.style.opacity=op;el.style.clipPath='none';
+        el.style.visibility=op<=0.001?'hidden':'visible';scales[k]=1;continue;
+      }
+      if(k===0){
+        const tt=clamp((t-.08)/.92,0,1.14);
+        const Mx=entryR[1]/exitR[0];
+        s=Math.pow(Mx,tt);
+        const e=ss(0,.75,tt);
+        tx=(W/2-eye.x)*e;ty=(H/2-eye.y)*e;
+        el.style.transformOrigin=`${eye.x}px ${eye.y}px`;
+        el.style.transform=`translate(${tx}px,${ty}px) scale(${s})`;
+        op=1-ss(1.02,1.12,t);
+        offs[0]={x:eye.x+tx,y:eye.y+ty};
+      }else{
+        if(t<0){
+          // inside the previous layer's portal
+          const prevScale=scales[k-1];
+          const portal=exitR[k-1]*prevScale;
+          s=Math.max(portal/entryR[k],1e-4);
+          const c = k===1 ? offs[0] : {x:W/2,y:H/2};
+          tx=c.x-W/2;ty=c.y-H/2;
+          clip=`circle(${entryR[k]}px at 50% 50%)`;
+          op=ss(-.75,-.35,t);
+        }else{
+          const Mx= k<5 ? entryR[k+1]/exitR[k] : 1;
+          s= k<5 ? Math.pow(Mx,Math.min(t,1.14)) : 1;
+          const rad=entryR[k]+ss(0,.12,t)*HALF*1.3;
+          clip= t>=.12 ? 'none' : `circle(${rad}px at 50% 50%)`;
+          op= k<5 ? 1-ss(1.02,1.12,t) : 1;
+        }
+        if(t<=-1||op<=0.001||t>=1.12){el.style.visibility='hidden';}
+        else{el.style.visibility='visible';
+          el.style.transform=`translate(${tx}px,${ty}px) scale(${s})`;
+          el.style.clipPath=clip||'none';el.style.webkitClipPath=clip||'none';}
+        el.style.opacity=op;
+      }
+      scales[k]=s;
+      if(k===4)ionVisible=el.style.visibility!=='hidden';
+    }
+    // copy
+    heroCopy.style.opacity=1-ss(.06,.22,P);
+    heroCopy.style.transform=`translateY(${-ss(.06,.22,P)*24}px)`;
+    heroCopy.style.visibility=P>.25?'hidden':'visible';
+    for(let k=1;k<=4;k++){
+      const t=P-k;const o=ss(-.12,.06,t)*(1-ss(.5,.68,t));
+      caps[k].style.opacity=o;caps[k].style.transform=`translateY(${(1-o)*18}px)`;
+    }
+    gauge.forEach((li,i)=>li.classList.toggle('active',i===Math.min(5,Math.floor(P+.35))));
+    const dark=P>.75&&P<4.75;
+    stage.classList.toggle('dark',dark);
+    // header colour follows what's under it
+    const stageVisible=window.scrollY < dive.offsetTop+dive.offsetHeight-H*.5;
+    bar.classList.toggle('on-dark',stageVisible&&dark);
+  }
+
+  function loop(t){
+    if(ionVisible)drawIon(t);
+    raf=requestAnimationFrame(loop);
+  }
+  let ticking=false;
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{update();ticking=false;});}},{passive:true});
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(layout,120);});
+  const img=document.getElementById('face');
+  if(img.complete)layout();else img.addEventListener('load',layout);
+  layout();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{drawPeptide();});
+  raf=requestAnimationFrame(loop);
+
+  // copy discount code
+  const code=document.getElementById('code');
+  code.addEventListener('click',()=>{
+    const done=()=>{code.textContent='Copied';setTimeout(()=>code.textContent='JJ10',1400)};
+    try{navigator.clipboard.writeText('JJ10').then(done,()=>{selectCode()})}catch(e){selectCode()}
+    function selectCode(){const r=document.createRange();r.selectNodeContents(code);const s=getSelection();s.removeAllRanges();s.addRange(r);}
+  });
+})();
+</script>
